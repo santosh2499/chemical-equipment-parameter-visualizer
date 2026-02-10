@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: chemical-equipment-visualizer
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "cd backend && gunicorn equipment_visualizer.wsgi:application"
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: NODE_VERSION
+        value: 18.0.0
