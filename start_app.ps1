@@ -27,8 +27,8 @@ if (!(Test-Path "venv")) {
 }
 
 # Determine venv paths
-$IsWindows = $env:OS -like "*Windows*"
-if ($IsWindows) {
+$CheckWindows = $env:OS -like "*Windows*"
+if ($CheckWindows) {
     $VenvPython = ".\venv\Scripts\python.exe"
     $VenvPip = ".\venv\Scripts\pip.exe"
 }
@@ -47,6 +47,9 @@ Write-Host "Installing backend dependencies..."
 
 Write-Host "Running migrations..."
 & $VenvPython manage.py migrate
+
+Write-Host "Opening browser..."
+Start-Process "http://localhost:8000"
 
 Write-Host "Starting Django Server..."
 & $VenvPython manage.py runserver
