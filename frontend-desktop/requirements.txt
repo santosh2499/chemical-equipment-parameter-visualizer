@@ -1,0 +1,7 @@
+PyQt5==5.15.10
+matplotlib==3.8.2
+pandas==2.1.4
+requests==2.31.0
+numpy==1.26.3
+
+Pillow==10.2.0
