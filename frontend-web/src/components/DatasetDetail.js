@@ -13,7 +13,7 @@ import {
     Legend,
     ArcElement,
 } from 'chart.js';
-import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Bar, Pie } from 'react-chartjs-2';
 
 ChartJS.register(
     CategoryScale,
@@ -31,36 +31,24 @@ function DatasetDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [dataset, setDataset] = useState(null);
-    const [summary, setSummary] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [downloading, setDownloading] = useState(false);
 
     useEffect(() => {
+        const fetchDataset = async () => {
+            try {
+                const response = await datasetAPI.get(id);
+                setDataset(response.data);
+            } catch (err) {
+                setError('Failed to load dataset');
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
         fetchDataset();
-        fetchSummary();
     }, [id]);
-
-    const fetchDataset = async () => {
-        try {
-            const response = await datasetAPI.get(id);
-            setDataset(response.data);
-        } catch (err) {
-            setError('Failed to load dataset');
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const fetchSummary = async () => {
-        try {
-            const response = await datasetAPI.getSummary(id);
-            setSummary(response.data);
-        } catch (err) {
-            console.error('Failed to load summary:', err);
-        }
-    };
 
     const handleDownloadReport = async () => {
         setDownloading(true);

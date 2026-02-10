@@ -34,7 +34,7 @@ function Register({ onRegister }) {
         setLoading(true);
 
         try {
-            const response = await authAPI.register(formData);
+            await authAPI.register(formData);
             // Auto-login after registration
             const loginResponse = await authAPI.login({
                 username: formData.username,
